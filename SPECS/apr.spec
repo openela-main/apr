@@ -6,7 +6,7 @@
 Summary: Apache Portable Runtime library
 Name: apr
 Version: 1.7.0
-Release: 11%{?dist}
+Release: 12%{?dist}
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
 # BSD with advertising: strings/apr_snprintf.c, strings/apr_fnmatch.c,
@@ -22,6 +22,7 @@ Patch2: apr-1.2.7-pkgconf.patch
 Patch3: apr-1.7.0-deepbind.patch
 Patch4: apr-1.7.0-r1891269+.patch
 Patch5: apr-1.7.0-r1894167.patch
+Patch6: apr-1.7.0-encoding.patch
 BuildRequires: gcc, autoconf, libtool, libuuid-devel, python3
 BuildRequires: make
 
@@ -49,6 +50,7 @@ C data structures and routines.
 %patch3 -p1 -b .deepbind
 %patch4 -p1 -b .r1891269+
 %patch5 -p1 -b .r1894167
+%patch6 -p1 -b .encoding
 
 %build
 # regenerate configure script etc.
@@ -136,6 +138,10 @@ popd
 %{_datadir}/aclocal/*.m4
 
 %changelog
+* Thu Dec  7 2023 Joe Orton <jorton@redhat.com> - 1.7.0-12
+- fix integer bounds checking in apr_encode_*
+  Resolves: RHEL-17123
+
 * Mon Dec  6 2021 Joe Orton <jorton@redhat.com> - 1.7.0-11
 - always disable SCTP support at build time (#1997107)
 
